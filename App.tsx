@@ -1,13 +1,29 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Routes from "./src/routes/Routes";
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from "@apollo/client";
+import { API_URL } from "./src/constants";
 
 const App = () => {
+  const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+    uri: API_URL,
+    cache: new InMemoryCache(),
+    headers: {
+      authorization: localStorage.getItem("token") || "",
+    },
+  });
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Daddy Studies</Text>
-      <Routes />
-    </View>
+    <ApolloProvider client={client}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Daddy Studies</Text>
+        <Routes />
+      </View>
+    </ApolloProvider>
   );
 };
 
