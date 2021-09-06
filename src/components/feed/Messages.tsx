@@ -5,6 +5,9 @@ import { iMessage } from "../../interfaces/Workspace";
 import MessagesInput from "./MessagesInput";
 import { Card, Title, Paragraph } from "react-native-paper";
 import { Avatar } from "react-native-paper";
+import Like from "./Like";
+import Dislike from "./Dislike";
+import Comments from "./Comments";
 
 export interface FeedProps {
   messages: iMessage[];
@@ -27,7 +30,7 @@ const Messages: React.FC<FeedProps> = ({
         onContentSizeChange={() =>
           scrollViewRef.current.scrollToEnd({ animated: true })
         }>
-        {messages.map((el: iMessage) => {
+        {messages.map((message: iMessage) => {
           return (
             <Card style={styles.card}>
               <Card.Content>
@@ -35,7 +38,12 @@ const Messages: React.FC<FeedProps> = ({
                   <Avatar.Text style={styles.avatar} size={38} label="AB" />
                   <Title>Aymeric Bouault</Title>
                 </View>
-                <Paragraph style={styles.content}> {el.content}</Paragraph>
+                <Paragraph style={styles.content}>{message.content}</Paragraph>
+                <View style={styles.iconContainer}>
+                  <Comments />
+                  <Like />
+                  <Dislike />
+                </View>
               </Card.Content>
             </Card>
           );
@@ -76,5 +84,11 @@ const styles = StyleSheet.create({
   inputContainer: {
     justifyContent: "flex-end",
     marginBottom: 60,
+  },
+  iconContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginTop: 20,
   },
 });
