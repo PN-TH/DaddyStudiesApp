@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { useMutation, gql } from "@apollo/client";
 import { Badge } from "react-native-paper";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { AppContext } from "../../contexts/AppProvider";
+import Messages from "./Messages";
 
-const ADD_MESSAGE = gql`
-  mutation createMessageInFeed($input: InputMessages!) {
-    createMessageInFeed(input: $input) {
+const ADD_COMMENT = gql`
+  mutation createCommentInMessage($input: InputComments!) {
+    createCommentInMessage(input: $input) {
       id
       title
       isSchoolWorkspace
@@ -16,6 +18,10 @@ const ADD_MESSAGE = gql`
         messages {
           id
           content
+          comments {
+            id
+            content
+          }
         }
       }
       assets {
@@ -29,30 +35,36 @@ const ADD_MESSAGE = gql`
 export interface MessageInputProps {
   workspaceId: string;
   feedId: string;
+  messageId: string;
 }
 
-const MessagesInput: React.FC<MessageInputProps> = ({
+const CommentsInput: React.FC<MessageInputProps> = ({
   workspaceId,
   feedId,
+  messageId,
 }) => {
-  const [userMessage, setUserMessage] = useState<string>("");
-  const [addMessage] = useMutation(ADD_MESSAGE);
+  const [userComment, setUserComment] = useState<string>("");
+  const [addComment] = useMutation(ADD_COMMENT);
+  const { setRefresh } = useContext(AppContext);
 
   const handleMessage = (text: string) => {
-    setUserMessage(text);
+    setUserComment(text);
   };
 
   const onSubmit = () => {
-    addMessage({
+    addComment({
       variables: {
         input: {
           parentWorkspaceId: workspaceId,
+          // eslint-disable-next-line object-shorthand
           feedId: feedId,
-          messageContent: userMessage,
+          messageId: messageId,
+          commentContent: userComment,
         },
       },
     });
-    setUserMessage("");
+    setRefresh(true);
+    setUserComment("");
   };
 
   return (
@@ -60,7 +72,7 @@ const MessagesInput: React.FC<MessageInputProps> = ({
       <TextInput
         style={styles.input}
         onChangeText={handleMessage}
-        value={userMessage}
+        value={userComment}
         placeholder="Ecrivez quelque chose"
         onSubmitEditing={() => onSubmit()}
       />
@@ -74,7 +86,7 @@ const MessagesInput: React.FC<MessageInputProps> = ({
   );
 };
 
-export default MessagesInput;
+export default CommentsInput;
 
 const styles = StyleSheet.create({
   searchSection: {

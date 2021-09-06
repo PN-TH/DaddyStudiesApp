@@ -32,7 +32,7 @@ const Messages: React.FC<FeedProps> = ({
         }>
         {messages.map((message: iMessage) => {
           return (
-            <Card style={styles.card}>
+            <Card style={styles.card} key={message.id}>
               <Card.Content>
                 <View style={styles.user}>
                   <Avatar.Text style={styles.avatar} size={38} label="AB" />
@@ -40,7 +40,11 @@ const Messages: React.FC<FeedProps> = ({
                 </View>
                 <Paragraph style={styles.content}>{message.content}</Paragraph>
                 <View style={styles.iconContainer}>
-                  <Comments />
+                  <Comments
+                    message={message}
+                    workspaceId={workspaceId}
+                    feedId={feedId}
+                  />
                   <Like />
                   <Dislike />
                 </View>
@@ -67,6 +71,7 @@ const styles = StyleSheet.create({
   card: {
     margin: 10,
     borderRadius: 25,
+    borderBottomEndRadius: 0,
   },
   user: {
     flexDirection: "row",

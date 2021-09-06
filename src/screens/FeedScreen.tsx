@@ -37,7 +37,7 @@ const FeedScreen = ({ route, navigation }: any) => {
   const [messages, setMessages] = useState<iMessage[]>([]);
   const [feedId, setFeedId] = useState<string>("");
   const scrollViewRef = useRef();
-  const { firstFeedOnHomePage } = useContext(AppContext);
+  const { firstFeedOnHomePage, refresh, setRefresh } = useContext(AppContext);
   const { loading, error, data } = useQuery(GET_WORKSPACE, {
     variables: {
       input: {
@@ -50,7 +50,8 @@ const FeedScreen = ({ route, navigation }: any) => {
       setMessages(data.getWorkspaceById.feed[0].messages);
       setFeedId(data.getWorkspaceById.feed[0].id);
     }
-  }, [data, messages]);
+    setRefresh(false);
+  }, [data, messages, refresh]);
 
   return (
     <View style={styles.container}>
