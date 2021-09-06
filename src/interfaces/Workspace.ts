@@ -1,20 +1,20 @@
 export interface iWorkspace {
-  id?: string;
-  title?: string;
+  id: string;
+  title: string;
   visio?: string;
   feed: iFeed[];
-  assets: iAssets[];
+  assets?: iAssets[];
 }
 
 export interface iFeed {
-  id?: string;
-  feedName?: string;
-  messages: IMessage[];
+  id: string;
+  feedName: string;
+  messages: iMessage[];
 }
 
-export interface IMessage {
-  id?: string;
-  content?: string;
+export interface iMessage {
+  id: string;
+  content: string;
   userId?: string;
   createdAt?: Date;
   likes?: ILike[];
@@ -23,8 +23,8 @@ export interface IMessage {
 }
 
 export interface IComment {
-  id?: string;
-  content?: string;
+  id: string;
+  content: string;
   userId?: string;
   createdAt?: Date;
 }
