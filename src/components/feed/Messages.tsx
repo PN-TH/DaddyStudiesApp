@@ -1,21 +1,49 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { iMessage } from "../../interfaces/Workspace";
+import MessagesInput from "./MessagesInput";
+import { Card, Title, Paragraph } from "react-native-paper";
+import { Avatar } from "react-native-paper";
 
 export interface FeedProps {
   messages: iMessage[];
+  workspaceId: string;
+  feedId: string;
+  scrollViewRef: any;
 }
 
-const Messages: React.FC<FeedProps> = ({ messages }) => {
+const Messages: React.FC<FeedProps> = ({
+  messages,
+  workspaceId,
+  feedId,
+  scrollViewRef,
+}) => {
   return (
     <View style={styles.container}>
-      {messages.map((el: iMessage) => {
-        return (
-          <Text style={styles.content} key={el.id}>
-            {el.content}
-          </Text>
-        );
-      })}
+      <ScrollView
+        style={styles.messagesContainer}
+        ref={scrollViewRef}
+        onContentSizeChange={() =>
+          scrollViewRef.current.scrollToEnd({ animated: true })
+        }>
+        {messages.map((el: iMessage) => {
+          return (
+            <Card style={styles.card}>
+              <Card.Content>
+                <View style={styles.user}>
+                  <Avatar.Text style={styles.avatar} size={38} label="AB" />
+                  <Title>Aymeric Bouault</Title>
+                </View>
+                <Paragraph style={styles.content}> {el.content}</Paragraph>
+              </Card.Content>
+            </Card>
+          );
+        })}
+      </ScrollView>
+      <View style={styles.inputContainer}>
+        <MessagesInput workspaceId={workspaceId} feedId={feedId} />
+      </View>
     </View>
   );
 };
@@ -25,8 +53,28 @@ export default Messages;
 const styles = StyleSheet.create({
   container: {
     margin: 10,
+    height: "100%",
+  },
+  messagesContainer: {},
+  card: {
+    margin: 10,
+    borderRadius: 25,
+  },
+  user: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  avatar: {
+    marginRight: 8,
   },
   content: {
     margin: 5,
+    marginTop: 20,
+    justifyContent: "flex-start",
+    fontSize: 16,
+  },
+  inputContainer: {
+    justifyContent: "flex-end",
+    marginBottom: 60,
   },
 });
