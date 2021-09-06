@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Feed from "../components/feed/Messages";
+import Messages from "../components/feed/Messages";
 import { useQuery, gql } from "@apollo/client";
 import { iMessage } from "../interfaces/Workspace";
 import { AppContext } from "../contexts/AppProvider";
@@ -36,6 +36,7 @@ const FeedScreen = ({ route, navigation }: any) => {
   const { workspace } = route.params || [];
   const [messages, setMessages] = useState<iMessage[]>([]);
   const [feedId, setFeedId] = useState<string>("");
+  const scrollViewRef = useRef();
   const { firstFeedOnHomePage } = useContext(AppContext);
   const { loading, error, data } = useQuery(GET_WORKSPACE, {
     variables: {
@@ -53,7 +54,12 @@ const FeedScreen = ({ route, navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Feed messages={messages} />
+      <Messages
+        messages={messages}
+        workspaceId={workspace ? workspace.id : firstFeedOnHomePage}
+        feedId={feedId}
+        scrollViewRef={scrollViewRef}
+      />
     </View>
   );
 };
