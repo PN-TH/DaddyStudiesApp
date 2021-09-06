@@ -1,5 +1,7 @@
+import { Component } from "react";
 import { DrawerConfig } from "../interfaces/Drawer";
 import AssetScreen from "../screens/AssetScreen";
+import CommentScreen from "../screens/CommentScreen";
 import FeedScreen from "../screens/FeedScreen";
 
 /*
@@ -16,6 +18,11 @@ const useDrawerConfig = () => {
       routeName: "Assets",
       labelRoute: "Ressources",
       component: AssetScreen,
+    },
+    {
+      routeName: "Comments",
+      labelRoute: "Commentaire",
+      component: CommentScreen,
     },
   ];
 

@@ -17,23 +17,23 @@ export interface iMessage {
   content: string;
   userId?: string;
   createdAt?: Date;
-  likes?: ILike[];
-  dislikes?: IDislike[];
-  comments?: IComment[];
+  likes?: iLike[];
+  dislikes?: iDislike[];
+  comments?: iComment[];
 }
 
-export interface IComment {
+export interface iComment {
   id: string;
   content: string;
   userId?: string;
   createdAt?: Date;
 }
 
-export interface ILike {
+export interface iLike {
   userId?: string;
 }
 
-export interface IDislike {
+export interface iDislike {
   userId?: string;
 }
 

@@ -26,6 +26,7 @@ const GET_WORKSPACES = gql`
 const AppProvider = ({ children }) => {
   const [workspaces, setWorkspaces] = useState<iWorkspace[]>([]);
   const [firstFeedOnHomePage, setFirstFeedOnHomePage] = useState<string>("");
+  const [refresh, setRefresh] = useState<boolean>(false);
 
   const { loading, error, data } = useQuery(GET_WORKSPACES, {
     variables: {
@@ -50,6 +51,8 @@ const AppProvider = ({ children }) => {
         setWorkspaces,
         loading,
         firstFeedOnHomePage,
+        refresh,
+        setRefresh,
       }}>
       {children}
     </AppContext.Provider>
