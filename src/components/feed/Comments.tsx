@@ -20,7 +20,11 @@ const Comments: React.FC<CommentsProps> = ({
       <TouchableOpacity
         style={styles.commentContainer}
         onPress={() =>
-          navigation.navigate("Comments", { message, feedId, workspaceId })
+          navigation.navigate("Comments", {
+            message,
+            feedId,
+            workspaceId,
+          })
         }>
         <Icons name="comment" size={24} style={styles.icons} />
         <Text style={{ fontSize: 16 }}>{message.comments.length}</Text>

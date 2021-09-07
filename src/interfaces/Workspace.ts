@@ -15,7 +15,8 @@ export interface iFeed {
 export interface iMessage {
   id: string;
   content: string;
-  userId?: string;
+  userId: string;
+  userName?: string;
   createdAt?: Date;
   likes?: iLike[];
   dislikes?: iDislike[];
@@ -26,15 +27,18 @@ export interface iComment {
   id: string;
   content: string;
   userId?: string;
+  userName?: any;
   createdAt?: Date;
 }
 
 export interface iLike {
   userId?: string;
+  userName?: any;
 }
 
 export interface iDislike {
   userId?: string;
+  userName?: any;
 }
 
 export interface iAssets {

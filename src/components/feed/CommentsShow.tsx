@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { iComment, iMessage } from "../../interfaces/Workspace";
 import { Card, Title, Paragraph } from "react-native-paper";
@@ -12,20 +12,23 @@ export interface CommentShowProps {
   message: iMessage;
   workspaceId: string;
   feedId: string;
+  scrollViewRef: any;
 }
 
 const CommentsShow: React.FC<CommentShowProps> = ({
   message,
   workspaceId,
   feedId,
+  scrollViewRef,
 }) => {
   const navigation: any = useNavigation();
+  console.log(message);
   return (
     <View style={styles.container}>
       <Icons
         name="arrow-back-ios"
         size={30}
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.goBack({ feedId, workspaceId })}
       />
       <Card style={styles.card} key={message.id}>
         <Card.Content>
@@ -38,7 +41,11 @@ const CommentsShow: React.FC<CommentShowProps> = ({
       </Card>
       <View style={styles.borderComment}></View>
 
-      <ScrollView>
+      <ScrollView
+        ref={scrollViewRef}
+        onContentSizeChange={() =>
+          scrollViewRef.current.scrollToEnd({ animated: true })
+        }>
         <View
           style={message.comments.length ? styles.container : styles.noMessage}>
           {message.comments.length > 0 ? (
@@ -108,6 +115,7 @@ const styles = StyleSheet.create({
   borderComment: {
     borderWidth: 0.5,
     marginTop: 5,
+    marginBottom: 10,
   },
   noMessage: {
     justifyContent: "center",

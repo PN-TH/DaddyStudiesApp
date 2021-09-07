@@ -1,10 +1,8 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { useMutation, gql } from "@apollo/client";
-import { Badge } from "react-native-paper";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { AppContext } from "../../contexts/AppProvider";
-import Messages from "./Messages";
 
 const ADD_COMMENT = gql`
   mutation createCommentInMessage($input: InputComments!) {
@@ -51,8 +49,8 @@ const CommentsInput: React.FC<MessageInputProps> = ({
     setUserComment(text);
   };
 
-  const onSubmit = () => {
-    addComment({
+  const onSubmit = async () => {
+    await addComment({
       variables: {
         input: {
           parentWorkspaceId: workspaceId,
@@ -63,7 +61,6 @@ const CommentsInput: React.FC<MessageInputProps> = ({
         },
       },
     });
-    setRefresh(true);
     setUserComment("");
   };
 

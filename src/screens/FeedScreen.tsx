@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import Messages from "../components/feed/Messages";
 import { useQuery, gql } from "@apollo/client";
 import { iMessage } from "../interfaces/Workspace";
@@ -45,28 +45,36 @@ const FeedScreen = ({ route, navigation }: any) => {
       },
     },
   });
+
   useEffect(() => {
     if (data) {
       setMessages(data.getWorkspaceById.feed[0].messages);
       setFeedId(data.getWorkspaceById.feed[0].id);
     }
-    setRefresh(false);
-  }, [data, messages, refresh]);
+  }, [data, messages]);
 
+  if (loading)
+    return (
+      <View style={styles.loader}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   return (
-    <View style={styles.container}>
-      <Messages
-        messages={messages}
-        workspaceId={workspace ? workspace.id : firstFeedOnHomePage}
-        feedId={feedId}
-        scrollViewRef={scrollViewRef}
-      />
-    </View>
+    <Messages
+      messages={messages}
+      workspaceId={workspace ? workspace.id : firstFeedOnHomePage}
+      feedId={feedId}
+      scrollViewRef={scrollViewRef}
+    />
   );
 };
 
 export default FeedScreen;
 
 const styles = StyleSheet.create({
-  container: {},
+  loader: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: "90%",
+  },
 });
