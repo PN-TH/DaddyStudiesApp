@@ -27,7 +27,6 @@ const AppProvider = ({ children }) => {
   const [workspaces, setWorkspaces] = useState<iWorkspace[]>([]);
   const [firstFeedOnHomePage, setFirstFeedOnHomePage] = useState<string>("");
   const [refresh, setRefresh] = useState<boolean>(false);
-
   const { loading, error, data } = useQuery(GET_WORKSPACES, {
     variables: {
       input: {
@@ -38,6 +37,8 @@ const AppProvider = ({ children }) => {
   });
 
   useEffect(() => {
+    console.log(error);
+    console.log(data);
     if (data) {
       setWorkspaces(data.allWorkspaces);
       setFirstFeedOnHomePage(data.allWorkspaces[0].id);

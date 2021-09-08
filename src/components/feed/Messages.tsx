@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { iMessage } from "../../interfaces/Workspace";
 import MessagesInput from "./MessagesInput";
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     justifyContent: "flex-end",
-    marginBottom: 60,
+    marginBottom: Platform.OS === "ios" ? 60 : 20,
   },
   iconContainer: {
     flexDirection: "row",

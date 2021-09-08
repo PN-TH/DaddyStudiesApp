@@ -1,3 +1,4 @@
+/* eslint disable */
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import React, { useContext, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -31,9 +32,6 @@ const GET_WORKSPACES = gql`
 
 function CustomDrawerContent(props) {
   const drawerConfig = useDrawerConfig();
-  const [workspacesStudent, setWorkspacesStudent] = useState<iWorkspace[]>([]);
-  const { workspaces, firstFeedOnHomePage, loading } = useContext(AppContext);
-
   const { data } = useQuery(GET_WORKSPACES, {
     variables: {
       input: {
@@ -42,12 +40,14 @@ function CustomDrawerContent(props) {
       },
     },
   });
+  const [workspacesStudent, setWorkspacesStudent] = useState<iWorkspace[]>([]);
 
   useEffect(() => {
     if (data) {
       setWorkspacesStudent(data.allWorkspaces);
     }
   }, [data]);
+  const { workspaces, firstFeedOnHomePage, loading } = useContext(AppContext);
 
   if (loading) {
     return <Text>Loading...</Text>;

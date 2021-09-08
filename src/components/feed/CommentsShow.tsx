@@ -24,58 +24,68 @@ const CommentsShow: React.FC<CommentShowProps> = ({
   const navigation: any = useNavigation();
   console.log(message);
   return (
-    <View style={styles.container}>
-      <Icons
-        name="arrow-back-ios"
-        size={30}
-        onPress={() => navigation.goBack({ feedId, workspaceId })}
-      />
-      <Card style={styles.card} key={message.id}>
-        <Card.Content>
-          <View style={styles.user}>
-            <Avatar.Text style={styles.avatar} size={38} label="AB" />
-            <Title>Aymeric Bouault</Title>
-          </View>
-          <Paragraph style={styles.content}>{message.content}</Paragraph>
-        </Card.Content>
-      </Card>
-      <View style={styles.borderComment}></View>
+    <View>
+      {message ? (
+        <View style={styles.container}>
+          <Icons
+            name="arrow-back-ios"
+            size={30}
+            onPress={() => navigation.goBack({ feedId, workspaceId })}
+          />
+          <Card style={styles.card} key={message.id}>
+            <Card.Content>
+              <View style={styles.user}>
+                <Avatar.Text style={styles.avatar} size={38} label="AB" />
+                <Title>Aymeric Bouault</Title>
+              </View>
+              <Paragraph style={styles.content}>{message.content}</Paragraph>
+            </Card.Content>
+          </Card>
+          <View style={styles.borderComment}></View>
 
-      <ScrollView
-        ref={scrollViewRef}
-        onContentSizeChange={() =>
-          scrollViewRef.current.scrollToEnd({ animated: true })
-        }>
-        <View
-          style={message.comments.length ? styles.container : styles.noMessage}>
-          {message.comments.length > 0 ? (
-            message.comments.map((comment: iComment) => {
-              return (
-                <Card style={styles.commentCard} key={comment.id}>
-                  <Card.Content>
-                    <View style={styles.user}>
-                      <Avatar.Text style={styles.avatar} size={38} label="AB" />
-                      <Title>Aymeric Bouault</Title>
-                    </View>
-                    <Paragraph style={styles.content}>
-                      {comment.content}
-                    </Paragraph>
-                  </Card.Content>
-                </Card>
-              );
-            })
-          ) : (
-            <Text>Soyez le premier à écrire un commentaire</Text>
-          )}
+          <ScrollView
+            ref={scrollViewRef}
+            onContentSizeChange={() =>
+              scrollViewRef.current.scrollToEnd({ animated: true })
+            }>
+            <View
+              style={
+                message.comments.length ? styles.container : styles.noMessage
+              }>
+              {message.comments.length > 0 ? (
+                message.comments.map((comment: iComment) => {
+                  return (
+                    <Card style={styles.commentCard} key={comment.id}>
+                      <Card.Content>
+                        <View style={styles.user}>
+                          <Avatar.Text
+                            style={styles.avatar}
+                            size={38}
+                            label="AB"
+                          />
+                          <Title>Aymeric Bouault</Title>
+                        </View>
+                        <Paragraph style={styles.content}>
+                          {comment.content}
+                        </Paragraph>
+                      </Card.Content>
+                    </Card>
+                  );
+                })
+              ) : (
+                <Text>Soyez le premier à écrire un commentaire</Text>
+              )}
+            </View>
+          </ScrollView>
+          <View style={styles.inputContainer}>
+            <CommentsInput
+              workspaceId={workspaceId}
+              feedId={feedId}
+              messageId={message.id}
+            />
+          </View>
         </View>
-      </ScrollView>
-      <View style={styles.inputContainer}>
-        <CommentsInput
-          workspaceId={workspaceId}
-          feedId={feedId}
-          messageId={message.id}
-        />
-      </View>
+      ) : null}
     </View>
   );
 };
