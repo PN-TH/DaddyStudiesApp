@@ -34,9 +34,6 @@ const CommentScreen = ({ route }) => {
       },
     },
   });
-  console.log("messageId: " + message.id);
-  console.log("workspaceId: " + workspaceId);
-  console.log("feedId: " + feedId);
 
   useEffect(() => {
     if (data) {

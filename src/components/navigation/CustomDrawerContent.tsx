@@ -36,7 +36,7 @@ function CustomDrawerContent(props) {
     variables: {
       input: {
         isSchoolWorkspace: false,
-        schoolId: "2",
+        schoolId: "1",
       },
     },
   });

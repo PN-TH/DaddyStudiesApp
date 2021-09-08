@@ -31,14 +31,12 @@ const AppProvider = ({ children }) => {
     variables: {
       input: {
         isSchoolWorkspace: true,
-        schoolId: "2",
+        schoolId: "1",
       },
     },
   });
 
   useEffect(() => {
-    console.log(error);
-    console.log(data);
     if (data) {
       setWorkspaces(data.allWorkspaces);
       setFirstFeedOnHomePage(data.allWorkspaces[0].id);

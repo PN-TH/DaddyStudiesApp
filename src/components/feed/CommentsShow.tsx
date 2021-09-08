@@ -22,7 +22,6 @@ const CommentsShow: React.FC<CommentShowProps> = ({
   scrollViewRef,
 }) => {
   const navigation: any = useNavigation();
-  console.log(message);
   return (
     <View>
       {message ? (
