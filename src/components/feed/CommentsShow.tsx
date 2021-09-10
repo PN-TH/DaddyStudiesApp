@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { iComment, iMessage } from "../../interfaces/Workspace";
-import { Card, Title, Paragraph } from "react-native-paper";
-import { Avatar } from "react-native-paper";
-import { ScrollView } from "react-native-gesture-handler";
-import CommentsInput from "./CommentsInput";
-import { useNavigation } from "@react-navigation/native";
-import Icons from "@expo/vector-icons/MaterialIcons";
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { iComment, iMessage } from '../../interfaces/Workspace';
+import { Card, Title, Paragraph } from 'react-native-paper';
+import { Avatar } from 'react-native-paper';
+import { ScrollView } from 'react-native-gesture-handler';
+import CommentsInput from './CommentsInput';
+import { useNavigation } from '@react-navigation/native';
+import Icons from '@expo/vector-icons/MaterialIcons';
 
 export interface CommentShowProps {
   message: iMessage;
@@ -27,14 +27,14 @@ const CommentsShow: React.FC<CommentShowProps> = ({
       {message ? (
         <View style={styles.container}>
           <Icons
-            name="arrow-back-ios"
+            name='arrow-back-ios'
             size={30}
             onPress={() => navigation.goBack({ feedId, workspaceId })}
           />
           <Card style={styles.card} key={message.id}>
             <Card.Content>
               <View style={styles.user}>
-                <Avatar.Text style={styles.avatar} size={38} label="AB" />
+                <Avatar.Text style={styles.avatar} size={38} label='AB' />
                 <Title>Aymeric Bouault</Title>
               </View>
               <Paragraph style={styles.content}>{message.content}</Paragraph>
@@ -46,11 +46,13 @@ const CommentsShow: React.FC<CommentShowProps> = ({
             ref={scrollViewRef}
             onContentSizeChange={() =>
               scrollViewRef.current.scrollToEnd({ animated: true })
-            }>
+            }
+          >
             <View
               style={
                 message.comments.length ? styles.container : styles.noMessage
-              }>
+              }
+            >
               {message.comments.length > 0 ? (
                 message.comments.map((comment: iComment) => {
                   return (
@@ -60,7 +62,7 @@ const CommentsShow: React.FC<CommentShowProps> = ({
                           <Avatar.Text
                             style={styles.avatar}
                             size={38}
-                            label="AB"
+                            label='AB'
                           />
                           <Title>Aymeric Bouault</Title>
                         </View>
@@ -94,7 +96,7 @@ export default CommentsShow;
 const styles = StyleSheet.create({
   container: {
     margin: 10,
-    height: "100%",
+    height: '100%',
   },
   messagesContainer: {},
   card: {
@@ -106,11 +108,11 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 1,
     margin: 5,
     borderRadius: 20,
-    backgroundColor: "#f7f5da",
+    backgroundColor: '#f7f5da',
   },
   user: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   avatar: {
     marginRight: 8,
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
   content: {
     margin: 5,
     marginTop: 20,
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
     fontSize: 16,
   },
   borderComment: {
@@ -127,13 +129,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   noMessage: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
     marginTop: 60,
   },
   inputContainer: {
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     marginBottom: 60,
   },
 });

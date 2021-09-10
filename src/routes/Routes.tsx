@@ -1,9 +1,10 @@
-import React from "react";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { StyleSheet } from "react-native";
-import useDrawerConfig from "../hooks/useDrawerConfig";
-import CustomDrawerContent from "../components/navigation/CustomDrawerContent";
-import { NavigationContainer } from "@react-navigation/native";
+import React from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { StyleSheet } from 'react-native';
+import useDrawerConfig from '../hooks/useDrawerConfig';
+import CustomDrawerContent from '../components/navigation/CustomDrawerContent';
+import { NavigationContainer } from '@react-navigation/native';
+import UserIcon from '../components/navigation/UserIcon';
 
 // Création des Navigators
 const Drawer = createDrawerNavigator();
@@ -16,13 +17,18 @@ export const DrawerNavigator = () => {
     <NavigationContainer>
       <Drawer.Navigator
         drawerContent={(props) => <CustomDrawerContent {...props} />}
-        initialRouteName={"Feed"}>
+        initialRouteName={'Login'}
+      >
         {/* Déclaration des écrans selon configuration */}
         {drawerConfig.map((screen: any, index: number) => {
           return (
             <Drawer.Screen
               name={screen.routeName}
               component={screen.component}
+              options={({ navigation, route }) => ({
+                headerTitle: screen.labelRoute,
+                headerRight: (props) => <UserIcon {...props} />,
+              })}
               key={index}
             />
           );

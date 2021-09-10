@@ -1,13 +1,14 @@
-import React from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { iMessage } from "../../interfaces/Workspace";
-import MessagesInput from "./MessagesInput";
-import { Card, Title, Paragraph } from "react-native-paper";
-import { Avatar } from "react-native-paper";
-import Like from "./Like";
-import Dislike from "./Dislike";
-import Comments from "./Comments";
+import React from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { iMessage } from '../../interfaces/Workspace';
+import MessagesInput from './MessagesInput';
+import { Card, Title, Paragraph } from 'react-native-paper';
+import { Avatar } from 'react-native-paper';
+import Like from './Like';
+import Dislike from './Dislike';
+import Comments from './Comments';
+import useNickname from '../../hooks/useNickname';
 
 export interface FeedProps {
   messages: iMessage[];
@@ -29,7 +30,8 @@ const Messages: React.FC<FeedProps> = ({
         ref={scrollViewRef}
         onContentSizeChange={() =>
           scrollViewRef.current.scrollToEnd({ animated: true })
-        }>
+        }
+      >
         {messages.length ? (
           <View>
             {messages.map((message: iMessage) => {
@@ -37,9 +39,21 @@ const Messages: React.FC<FeedProps> = ({
                 <Card style={styles.card} key={message.id}>
                   <Card.Content>
                     <View style={styles.user}>
-                      <Avatar.Text style={styles.avatar} size={38} label="AB" />
-                      <Title>Aymeric Bouault</Title>
+                      <Avatar.Text
+                        style={styles.avatar}
+                        size={38}
+                        label={useNickname(message.userName)}
+                      />
+                      <Title>{message.userName}</Title>
                     </View>
+                    <Paragraph>
+                      {message.createdAt
+                        ? new Date(
+                            parseInt(message.createdAt, 10)
+                          ).toLocaleString('fr-FR', { timeZone: 'UTC' })
+                        : null}
+                    </Paragraph>
+
                     <Paragraph style={styles.content}>
                       {message.content}
                     </Paragraph>
@@ -49,7 +63,11 @@ const Messages: React.FC<FeedProps> = ({
                         workspaceId={workspaceId}
                         feedId={feedId}
                       />
-                      <Like />
+                      <Like
+                        message={message}
+                        workspaceId={workspaceId}
+                        feedId={feedId}
+                      />
                       <Dislike />
                     </View>
                   </Card.Content>
@@ -75,7 +93,7 @@ export default Messages;
 const styles = StyleSheet.create({
   container: {
     margin: 10,
-    height: "100%",
+    height: '100%',
   },
   messagesContainer: {},
   card: {
@@ -84,8 +102,8 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 0,
   },
   user: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   avatar: {
     marginRight: 8,
@@ -93,21 +111,21 @@ const styles = StyleSheet.create({
   content: {
     margin: 5,
     marginTop: 20,
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
     fontSize: 16,
   },
   inputContainer: {
-    justifyContent: "flex-end",
-    marginBottom: Platform.OS === "ios" ? 60 : 20,
+    justifyContent: 'flex-end',
+    marginBottom: Platform.OS === 'ios' ? 60 : 20,
   },
   iconContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
     marginTop: 20,
   },
   noMessages: {
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: 60,
     fontSize: 16,
   },

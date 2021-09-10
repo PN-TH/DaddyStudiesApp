@@ -3,6 +3,8 @@ import { DrawerConfig } from "../interfaces/Drawer";
 import AssetScreen from "../screens/AssetScreen";
 import CommentScreen from "../screens/CommentScreen";
 import FeedScreen from "../screens/FeedScreen";
+import LoginScreen from "../screens/LoginScreen";
+
 
 /*
  *  Gestion de la configuration du Drawer
@@ -24,6 +26,12 @@ const useDrawerConfig = () => {
       labelRoute: "Commentaire",
       component: CommentScreen,
     },
+    {
+      routeName: "Login",
+      labelRoute: "Login",
+      component: LoginScreen,
+    },
+
   ];
 
   return drawerConfig;

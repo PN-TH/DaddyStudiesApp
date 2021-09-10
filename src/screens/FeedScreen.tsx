@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import Messages from "../components/feed/Messages";
-import { useQuery, gql } from "@apollo/client";
-import { iMessage } from "../interfaces/Workspace";
-import { AppContext } from "../contexts/AppProvider";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import Messages from '../components/feed/Messages';
+import { useQuery, gql } from '@apollo/client';
+import { iMessage } from '../interfaces/Workspace';
+import { AppContext } from '../contexts/AppProvider';
 
 const GET_WORKSPACE = gql`
   query getWorkspaceById($input: WorkspaceId!) {
@@ -18,13 +18,22 @@ const GET_WORKSPACE = gql`
           id
           content
           userId
-          likes {
-            userId
-          }
+          userName
+          createdAt
           comments {
             id
             content
             userId
+            userName
+            createdAt
+          }
+          likes {
+            userId
+            userName
+          }
+          dislikes {
+            userId
+            userName
           }
         }
       }
@@ -35,10 +44,10 @@ const GET_WORKSPACE = gql`
 const FeedScreen = ({ route, navigation }: any) => {
   const { workspace } = route.params || [];
   const [messages, setMessages] = useState<iMessage[]>([]);
-  const [feedId, setFeedId] = useState<string>("");
+  const [feedId, setFeedId] = useState<string>('');
   const scrollViewRef = useRef();
   const { firstFeedOnHomePage, refresh, setRefresh } = useContext(AppContext);
-  const { loading, error, data } = useQuery(GET_WORKSPACE, {
+  const { loading, error, data, refetch } = useQuery(GET_WORKSPACE, {
     variables: {
       input: {
         id: workspace ? workspace.id : firstFeedOnHomePage,
@@ -56,7 +65,7 @@ const FeedScreen = ({ route, navigation }: any) => {
   if (loading)
     return (
       <View style={styles.loader}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size='large' />
       </View>
     );
   return (
@@ -73,8 +82,8 @@ export default FeedScreen;
 
 const styles = StyleSheet.create({
   loader: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: "90%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '90%',
   },
 });

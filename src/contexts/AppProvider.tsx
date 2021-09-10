@@ -1,6 +1,8 @@
-import React, { createContext, useEffect, useState } from "react";
-import { useQuery, gql } from "@apollo/client";
-import { iWorkspace } from "../interfaces/Workspace";
+import React, { createContext, useEffect, useState } from 'react';
+import { useQuery, gql } from '@apollo/client';
+import { iWorkspace } from '../interfaces/Workspace';
+import { iUsers } from '../interfaces/User';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AppContext = createContext(null);
 
@@ -25,13 +27,15 @@ const GET_WORKSPACES = gql`
 
 const AppProvider = ({ children }) => {
   const [workspaces, setWorkspaces] = useState<iWorkspace[]>([]);
-  const [firstFeedOnHomePage, setFirstFeedOnHomePage] = useState<string>("");
+  const [firstFeedOnHomePage, setFirstFeedOnHomePage] = useState<string>('');
   const [refresh, setRefresh] = useState<boolean>(false);
+  const [userLogged, setUserLogged] = useState<boolean>(false);
+
   const { loading, error, data } = useQuery(GET_WORKSPACES, {
     variables: {
       input: {
         isSchoolWorkspace: true,
-        schoolId: "1",
+        schoolId: '1',
       },
     },
   });
@@ -52,7 +56,10 @@ const AppProvider = ({ children }) => {
         firstFeedOnHomePage,
         refresh,
         setRefresh,
-      }}>
+        userLogged,
+        setUserLogged,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

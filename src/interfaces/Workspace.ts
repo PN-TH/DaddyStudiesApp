@@ -17,7 +17,7 @@ export interface iMessage {
   content: string;
   userId: string;
   userName?: string;
-  createdAt?: Date;
+  createdAt?: string;
   likes?: iLike[];
   dislikes?: iDislike[];
   comments?: iComment[];
@@ -28,7 +28,7 @@ export interface iComment {
   content: string;
   userId?: string;
   userName?: any;
-  createdAt?: Date;
+  createdAt?: string;
 }
 
 export interface iLike {
