@@ -74,6 +74,7 @@ const FeedScreen = ({ route, navigation }: any) => {
       workspaceId={workspace ? workspace.id : firstFeedOnHomePage}
       feedId={feedId}
       scrollViewRef={scrollViewRef}
+      refetch={refetch}
     />
   );
 };

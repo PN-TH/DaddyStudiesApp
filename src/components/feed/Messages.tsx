@@ -15,6 +15,7 @@ export interface FeedProps {
   workspaceId: string;
   feedId: string;
   scrollViewRef: any;
+  refetch: any;
 }
 
 const Messages: React.FC<FeedProps> = ({
@@ -22,6 +23,7 @@ const Messages: React.FC<FeedProps> = ({
   workspaceId,
   feedId,
   scrollViewRef,
+  refetch,
 }) => {
   return (
     <View style={styles.container}>
@@ -53,7 +55,6 @@ const Messages: React.FC<FeedProps> = ({
                           ).toLocaleString('fr-FR', { timeZone: 'UTC' })
                         : null}
                     </Paragraph>
-
                     <Paragraph style={styles.content}>
                       {message.content}
                     </Paragraph>
@@ -67,8 +68,14 @@ const Messages: React.FC<FeedProps> = ({
                         message={message}
                         workspaceId={workspaceId}
                         feedId={feedId}
+                        refetch={refetch}
                       />
-                      <Dislike />
+                      <Dislike
+                        message={message}
+                        workspaceId={workspaceId}
+                        feedId={feedId}
+                        refetch={refetch}
+                      />
                     </View>
                   </Card.Content>
                 </Card>
