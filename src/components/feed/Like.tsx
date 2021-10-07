@@ -4,7 +4,6 @@ import Icons from '@expo/vector-icons/AntDesign';
 import { iMessage } from '../../interfaces/Workspace';
 import { useMutation, gql } from '@apollo/client';
 import { AppContext } from '../../contexts/AppProvider';
-import { useFocusEffect } from '@react-navigation/core';
 
 export interface LikeProps {
   message: iMessage;
@@ -79,12 +78,6 @@ const Like: React.FC<LikeProps> = ({
       }
     }
   };
-
-  useFocusEffect(
-    React.useCallback(() => {
-      checkActive();
-    }, [message, active])
-  );
 
   useEffect(() => {
     checkActive();
