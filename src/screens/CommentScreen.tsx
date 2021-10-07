@@ -1,19 +1,21 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import CommentsShow from "../components/feed/CommentsShow";
-import { useQuery, gql } from "@apollo/client";
-import { AppContext } from "../contexts/AppProvider";
-import { iMessage } from "../interfaces/Workspace";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import CommentsShow from '../components/feed/CommentsShow';
+import { useQuery, gql } from '@apollo/client';
+import { AppContext } from '../contexts/AppProvider';
+import { iMessage } from '../interfaces/Workspace';
 const GET_MESSAGE = gql`
   query getMessageById($input: InputMessages!) {
     getMessageById(input: $input) {
       id
       content
       userId
+      userName
       comments {
         id
         userId
         content
+        userName
       }
     }
   }
@@ -44,7 +46,7 @@ const CommentScreen = ({ route }) => {
   if (loading)
     return (
       <View style={styles.loader}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size='large' />
       </View>
     );
   return (
@@ -63,8 +65,8 @@ export default CommentScreen;
 
 const styles = StyleSheet.create({
   loader: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: "90%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '90%',
   },
 });

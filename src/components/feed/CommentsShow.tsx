@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import CommentsInput from './CommentsInput';
 import { useNavigation } from '@react-navigation/native';
 import Icons from '@expo/vector-icons/MaterialIcons';
+import useNickname from '../../hooks/useNickname';
 
 export interface CommentShowProps {
   message: iMessage;
@@ -34,8 +35,12 @@ const CommentsShow: React.FC<CommentShowProps> = ({
           <Card style={styles.card} key={message.id}>
             <Card.Content>
               <View style={styles.user}>
-                <Avatar.Text style={styles.avatar} size={38} label='AB' />
-                <Title>Aymeric Bouault</Title>
+                <Avatar.Text
+                  style={styles.avatar}
+                  size={38}
+                  label={useNickname(message.userName)}
+                />
+                <Title>{message.userName}</Title>
               </View>
               <Paragraph style={styles.content}>{message.content}</Paragraph>
             </Card.Content>
@@ -62,9 +67,9 @@ const CommentsShow: React.FC<CommentShowProps> = ({
                           <Avatar.Text
                             style={styles.avatar}
                             size={38}
-                            label='AB'
+                            label={useNickname(message.userName)}
                           />
-                          <Title>Aymeric Bouault</Title>
+                          <Title>{comment.userName}</Title>
                         </View>
                         <Paragraph style={styles.content}>
                           {comment.content}
